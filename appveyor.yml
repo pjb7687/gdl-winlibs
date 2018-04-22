@@ -29,7 +29,7 @@ build_script:
         $env:MINGWW64_ROOT=C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw32\bin
         $env:PYTHON_ROOT="C:\Python27-x64"
       }
-      & "$env:PROJECT_ROOT\build_script.ps1"
+  - ps: "build_script.ps1"
 
 after_build:
   - cd $env:PROJECT_ROOT
