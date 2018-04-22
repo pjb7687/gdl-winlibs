@@ -1,0 +1,38 @@
+image: Visual Studio 2015
+
+branches:
+  only:
+    - master
+
+clone_folder: c:\projects\gdl-winlibs
+
+environment:
+  matrix:
+  - platform: mingw64630i686
+  - platform: mingw64630x8664
+
+matrix:
+  fast_finish: true
+  
+build_script:
+  - ren "C:\Program Files\Git\usr\bin\sh.exe" _sh.exe
+  - ps: >-
+      $env:PROJECT_ROOT=C:\projects\gdl-winlibs
+      if ($env:platform -Match "mingw64630i686") {
+        $env:LIB_ROOT="$env:PROJECT_ROOT\win32libs"
+        $env:MINGWW64_ROOT=C:\mingw-w64\i686-6.3.0-posix-dwarf-rt_v5-rev1\mingw32\bin
+        $env:PYTHON_ROOT=C:\Python27
+      } else {
+        $env:LIB_ROOT="$env:PROJECT_ROOT\win64libs"
+        $env:MINGWW64_ROOT=C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw32\bin
+        $env:PYTHON_ROOT="C:\Python27-x64"
+      }
+      & "$env:PROJECT_ROOT\build_script.ps1"
+
+after_build:
+  - cd $env:PROJECT_ROOT
+  - 7z a "gdl_$env:platform.zip" "$env:LIB_ROOT"
+
+artifacts:
+  - path: gdl_winlibs.zip
+    name: GDL winlibs
