@@ -33,8 +33,8 @@ build_script:
   - ps: . .\build_script.ps1
 
 after_build:
-  - cd $env:PROJECT_ROOT
-  - 7z a "gdl_$env:platform.zip" "$env:LIB_ROOT"
+  - ps: cd $env:PROJECT_ROOT
+  - ps: 7z a gdl_winlibs.zip "$env:LIB_ROOT"
 
 artifacts:
   - path: gdl_winlibs.zip
