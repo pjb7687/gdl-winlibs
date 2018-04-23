@@ -20,6 +20,7 @@ build_script:
   - ren "C:\Program Files\Git\usr\bin\sh.exe" _sh.exe
   - ps: >-
       $env:PROJECT_ROOT="C:\projects\gdl-winlibs"
+      $env:MSYS_ROOT="C:\msys64"
 
       if ($env:platform -Match "mingw64630i686") {
         $env:LIB_ROOT="$env:PROJECT_ROOT\win32libs"
